@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Django Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Floating math icons */
+        .floating-icon {
+            position: absolute;
+            font-size: 40px;
+            color: rgba(255, 255, 255, 0.15);
+            animation: float 8s linear infinite;
+        }
+
+        .icon1 { top: 10%; left: 15%; animation-delay: 0s; }
+        .icon2 { top: 60%; left: 10%; animation-delay: 2s; }
+        .icon3 { top: 30%; right: 15%; animation-delay: 4s; }
+        .icon4 { bottom: 10%; right: 20%; animation-delay: 6s; }
+
+        @keyframes float {
+            0%   { transform: translateY(0); }
+            50%  { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+
+        .calculator-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 30px;
+            width: 340px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            color: #fff;
+            text-align: center;
+            animation: scaleIn 0.7s ease;
+            z-index: 2;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        h1 i {
+            margin-right: 8px;
+            color: #00e0ff;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.85;
+            margin-bottom: 25px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            font-size: 15px;
+        }
+
+        input, select {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        button {
+            background: #00e0ff;
+            color: #000;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 224, 255, 0.6);
+        }
+
+        .result-box {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.25);
+            font-size: 18px;
+            font-weight: 500;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            margin-top: 18px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Floating math icons -->
+    <i class="fas fa-plus floating-icon icon1"></i>
+    <i class="fas fa-minus floating-icon icon2"></i>
+    <i class="fas fa-xmark floating-icon icon3"></i>
+    <i class="fas fa-divide floating-icon icon4"></i>
+
+    <div class="calculator-card">
+        <h1><i class="fas fa-calculator"></i> Calculator</h1>
+        <div class="subtitle">Django Web Application</div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <input type="number" name="num1" placeholder="Enter first number" step="any" required>
+            <input type="number" name="num2" placeholder="Enter second number" step="any" required>
+
+            <select name="operator">
+                <option value="+">➕ Addition</option>
+                <option value="-">➖ Subtraction</option>
+                <option value="*">✖ Multiplication</option>
+                <option value="/">➗ Division</option>
+            </select>
+
+            <button type="submit">
+                <i class="fas fa-equals"></i> Calculate
+            </button>
+        </form>
+
+        {% if result != "" %}
+            <div class="result-box">
+                <i class="fas fa-square-root-variable"></i>
+                Result: {{ result }}
+            </div>
+        {% endif %}
+
+        
+    </div>
+
+</body>
+</html>
